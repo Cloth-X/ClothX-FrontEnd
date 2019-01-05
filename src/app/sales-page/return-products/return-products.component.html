@@ -1,13 +1,14 @@
+<div class="page bg-white h-100">
 <div class=" qr-scanner-preview">
   <div class="card">
     <app-qr-scanner (data)="getInvoiceId($event)"></app-qr-scanner>
   </div>
 </div>
-<div class="container">
-  <h3>Return invoice</h3>
+<div class="container  ">
+  <h3>Return Invoice</h3>
   <div class="form-group">
     <div class="input-group">
-      <input type="text" class="form-control form-control-md " id="invoice-id" placeholder="Invoice Id"
+      <input type="text" class="form-control form-control-md " id="invoice-id" placeholder="Invoice ID"
              required
              [(ngModel)]="invoiceId">
       <div class="input-group-append" id="button-addon4">
@@ -29,7 +30,7 @@
     <div class="card">
 
       <img src="../../assets/logo/logo.png" class="grey-icon" alt="">
-      <div class="content">Here you can record product return</div>
+      <div class="content">You can record your product return here</div>
     </div>
   </div>
   <div *ngIf="tempInvoice">
@@ -57,16 +58,20 @@
 
 
   </div>
-</div>
-<nav class="bg-dark text-white navbar " *ngIf="tempInvoice">
-  <div class=" total-detail">
-    <a>TQ: {{tempInvoice.totalQuantity}}</a>
-    <a>Total Price: &#8377; {{tempInvoice.totalPrice}}</a>
-    <!--<a>Total Tax: &#8377; {{invoice.totalTax}}</a>-->
-  </div>
-  <div>
-    <button class="btn btn-primary" type="button" *ngIf="selectedCartProducts.length > 0" (click)="returnSpecific()">Return selected</button>
-    <button class="btn btn-primary" type="button" *ngIf="selectedCartProducts.length === 0" (click)="returnAll()">Return all</button>
 
+</div>
+<div class="container">
+  <div class="alert-dark p-3 text-right font-weight-bold" *ngIf="tempInvoice">
+
+    <div class="m-4">Total Quantity: {{tempInvoice.totalQuantity}}</div>
+    <div class="m-4">Total Price: &#8377; {{tempInvoice.totalPrice}}</div>
+    <!--<a>Total Tax: &#8377; {{invoice.totalTax}}</a>-->
+
+    <div class="w-100">
+      <div class="button"  *ngIf="selectedCartProducts.length > 0"  (click)="returnSpecific()">Return selected</div>
+      <div class="button" *ngIf="selectedCartProducts.length === 0" (click)="returnAll()">Return all</div>
+
+    </div>
   </div>
-</nav>
+</div>
+</div>

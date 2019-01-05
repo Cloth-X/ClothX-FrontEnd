@@ -3,7 +3,7 @@
     <ng-template ngbTabContent>
 
 
-      <div class="page">
+      <div class="page  bg-white">
 
         <div class=" qr-scanner-preview">
           <div class="card">
@@ -14,7 +14,7 @@
 
         <div class="container">
           <a class="float-right" style="cursor: pointer" (click)="reset()"><i class="material-icons">refresh</i> </a>
-          <h3>Create invoice</h3>
+          <h3>Create Invoice</h3>
 
           <ngb-alert [dismissible]="true" *ngIf="isErrorInSavingInvoice" (close)="isErrorInSavingInvoice = false"
                      [type]="'danger'">
@@ -33,7 +33,7 @@
                                           (click)="selectPayment(payment)"
                                           *ngFor="let payment of typeOfPayment">{{payment}}</span></h6>
             <div class="input-group">
-              <input type="number" class="form-control form-control-md " id="customer-number" placeholder="Phone number"
+              <input type="number" class="form-control"  [ngClass]="screenWidth > 1400 ? 'form-control-lg':'form-control-sm'" id="customer-number" placeholder="Phone number"
                      required
                      [(ngModel)]="invoice.customerNumber"
                      (ngModelChange)="phoneNoChanged($event)">
@@ -47,7 +47,7 @@
           <div class="form-group">
             <label for="customer-number">Customer Name :</label>
             <div class="input-group">
-              <input type="text" class="form-control form-control-md " id="customer-name" placeholder="Customer name"
+              <input type="text" class="form-control" [ngClass]="screenWidth > 1400 ? 'form-control-lg':'form-control-sm'" id="customer-name" placeholder="Customer name"
                      required
                      [attr.readonly]="customerNotExit ? null : ''"
                      [(ngModel)]="invoice.customerName">
@@ -64,13 +64,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="add-cart">Product Id :</label>
+            <label for="add-cart">Product ID :</label>
             <div class="input-group">
-              <input type="text" class="form-control form-control-md " id="add-cart" aria-describedby="button-addon4"
-                     placeholder="Product reference number (PRN)"
+              <input type="text" class="form-control" [ngClass]="screenWidth > 1400 ? 'form-control-lg':'form-control-sm'" id="add-cart" aria-describedby="button-addon4"
+                     placeholder="Product Reference Number (PRN)"
                      [(ngModel)]="prn" [ngbTypeahead]="prnSearch" (keyup.enter)="addToCart(prn)">
               <div class="input-group-append" id="button-addon4">
-                <button class="btn btn-primary" type="button" (click)="addToCart(prn)">Add</button>
+                <button class="btn btn-primary" [ngClass]="screenWidth > 1400 ? '':' btn-sm'"  type="button" (click)="addToCart(prn)">Add</button>
               </div>
             </div>
           </div>
@@ -103,9 +103,10 @@
           <div class="item-wrapper" *ngIf="cartProducts.length > 0">
             <div class="item" *ngFor="let product of cartProducts; let i = index">
               <a class="menu float-right" (click)="deleteProductFromCart(i)"><i class="material-icons">delete</i> </a>
-              <img  *ngIf="product.productPreviewUrl === ''" src="../../../assets/logo/logo.png" class="grey-icon m-2"
+              <img *ngIf="product.productPreviewUrl === ''" src="../../../assets/logo/logo.png" class="grey-icon m-2"
                    width="50px" alt="no-preview">
-              <img class="m-2" *ngIf="product.productPreviewUrl !== ''" [src]="product.productPreviewUrl" width="50px" alt="product preview">
+              <img class="m-2" *ngIf="product.productPreviewUrl !== ''" [src]="product.productPreviewUrl" width="50px"
+                   alt="product preview">
               <h5>{{ product.productName }}</h5>
               <h6>{{product.prn}}</h6>
               <span class="badge search-option"
@@ -128,31 +129,25 @@
             </div>
 
           </div>
-
+          <div class="alert-dark text-right p-3 font-weight-bold ">
+            <div class=" m-4"><a >Total Quantity: {{invoice.totalQuantity}}</a></div>
+            <div class=" m-4 "> <a  *ngIf="!invoice.isDiscountApplied">Total Price: &#8377; {{invoice.totalPrice}}</a></div>
+            <div class=" m-4"><a  *ngIf="invoice.isDiscountApplied">Total Discount price:
+              &#8377; {{invoice.discountPrice}}</a></div>
+          </div>
+          <div class="w-100">
+            <a class="button" (click)="saveInvoice()">Send Invoice</a>
+          </div>
         </div>
+
       </div>
-      <nav class="bg-dark text-white navbar toolbar">
-        <div>
-
-        </div>
-        <div class=" total-detail">
-          <a>TQ: {{invoice.totalQuantity}}</a>
-          <a *ngIf="!invoice.isDiscountApplied">Total Price: &#8377; {{invoice.totalPrice}}</a>
-          <a *ngIf="invoice.isDiscountApplied">Total Discount price: &#8377; {{invoice.discountPrice}}</a>
-          <!--<a>Total Tax: &#8377; {{invoice.totalTax}}</a>-->
-
-          <!--<a class="icon-button" (click)="saveInvoice()"> <i class="material-icons">save_alt</i></a>-->
-          <a class="icon-button" (click)="saveInvoice()"> <i class="material-icons">send</i></a>
-        </div>
-
-      </nav>
-
+      <emptyspace></emptyspace>
     </ng-template>
   </ngb-tab>
   <ngb-tab>
     <ng-template ngbTabTitle>Return</ng-template>
-    <ng-template ngbTabContent>
-      <app-return-products></app-return-products>
+    <ng-template ngbTabContent >
+      <app-return-products ></app-return-products>
     </ng-template>
   </ngb-tab>
 
